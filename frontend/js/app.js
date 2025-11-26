@@ -1,3 +1,7 @@
+// DOM Elements - Theme
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
 // DOM Elements - Navigation
 const navButtons = document.querySelectorAll('.nav-btn');
 const pages = document.querySelectorAll('.page');
@@ -21,6 +25,42 @@ const resultMessage = document.getElementById('resultMessage');
 // DOM Elements - Shared
 const consoleOutput = document.getElementById('consoleOutput');
 const clearLogsBtn = document.getElementById('clearLogsBtn');
+
+// Theme Management
+class ThemeManager {
+    constructor() {
+        this.theme = this.getStoredTheme() || 'dark';
+        this.applyTheme(this.theme);
+    }
+
+    getStoredTheme() {
+        return localStorage.getItem('theme');
+    }
+
+    storeTheme(theme) {
+        localStorage.setItem('theme', theme);
+    }
+
+    applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeIcon.textContent = '☀️';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            themeIcon.textContent = '🌙';
+        }
+        this.theme = theme;
+        this.storeTheme(theme);
+    }
+
+    toggle() {
+        const newTheme = this.theme === 'dark' ? 'light' : 'dark';
+        this.applyTheme(newTheme);
+        console.log(`🎨 Theme switched to: ${newTheme}`);
+    }
+}
+
+const themeManager = new ThemeManager();
 
 // UI State Management
 class UIManager {
@@ -165,6 +205,11 @@ function showValidationResult(isValid, message) {
     resultTitle.textContent = isValid ? 'Valid Username' : 'Invalid Username';
     resultMessage.textContent = message;
 }
+
+// Event Listeners - Theme
+themeToggle.addEventListener('click', () => {
+    themeManager.toggle();
+});
 
 // Event Listeners - Navigation
 navButtons.forEach(btn => {
