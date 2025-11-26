@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetup - Health Check</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Meetup Health Check</h1>
+            <p class="subtitle">Backend API Connection Test</p>
+        </header>
+
+        <main>
+            <div class="status-card">
+                <div class="status-indicator" id="statusIndicator">
+                    <div class="pulse"></div>
+                </div>
+                <h2 id="statusText">Checking...</h2>
+                <p class="status-message" id="statusMessage">Connecting to backend...</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Server Information</h3>
+                <div class="info-row">
+                    <span class="label">Status:</span>
+                    <span class="value" id="serverStatus">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Timestamp:</span>
+                    <span class="value" id="serverTimestamp">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">API URL:</span>
+                    <span class="value" id="apiUrl">http://localhost:5000/api/health</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" id="checkHealthBtn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13.65 2.35A8 8 0 1 0 2.35 13.65 8 8 0 1 0 13.65 2.35z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 4v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Check Health
+                </button>
+            </div>
+
+            <div class="console-card">
+                <div class="console-header">
+                    <h3>API Call Logs</h3>
+                    <button class="btn-clear" id="clearLogsBtn">Clear</button>
+                </div>
+                <div class="console-output" id="consoleOutput">
+                    <div class="console-message info">Console initialized. All API calls will be logged here...</div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Open browser console (F12) for detailed logs</p>
+        </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
