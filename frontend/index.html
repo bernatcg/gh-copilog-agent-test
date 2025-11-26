@@ -3,51 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meetup - Health Check</title>
+    <title>Meetup Application</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Meetup Health Check</h1>
-            <p class="subtitle">Backend API Connection Test</p>
+            <h1>Meetup Application</h1>
+            <p class="subtitle">Backend API Testing & Validation</p>
         </header>
 
+        <nav class="navigation">
+            <button class="nav-btn active" data-page="health">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M10 6v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                Health Check
+            </button>
+            <button class="nav-btn" data-page="validation">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M10 14c-4 0-7 2-7 4v1h14v-1c0-2-3-4-7-4z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                User Validation
+            </button>
+        </nav>
+
         <main>
-            <div class="status-card">
-                <div class="status-indicator" id="statusIndicator">
-                    <div class="pulse"></div>
+            <!-- Health Check Page -->
+            <div id="healthPage" class="page active">
+                <div class="status-card">
+                    <div class="status-indicator" id="statusIndicator">
+                        <div class="pulse"></div>
+                    </div>
+                    <h2 id="statusText">Checking...</h2>
+                    <p class="status-message" id="statusMessage">Connecting to backend...</p>
                 </div>
-                <h2 id="statusText">Checking...</h2>
-                <p class="status-message" id="statusMessage">Connecting to backend...</p>
+
+                <div class="info-card">
+                    <h3>Server Information</h3>
+                    <div class="info-row">
+                        <span class="label">Status:</span>
+                        <span class="value" id="serverStatus">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Timestamp:</span>
+                        <span class="value" id="serverTimestamp">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">API URL:</span>
+                        <span class="value" id="apiUrl">http://localhost:5000/api/health</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" id="checkHealthBtn">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M13.65 2.35A8 8 0 1 0 2.35 13.65 8 8 0 1 0 13.65 2.35z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 4v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        Check Health
+                    </button>
+                </div>
             </div>
 
-            <div class="info-card">
-                <h3>Server Information</h3>
-                <div class="info-row">
-                    <span class="label">Status:</span>
-                    <span class="value" id="serverStatus">-</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Timestamp:</span>
-                    <span class="value" id="serverTimestamp">-</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">API URL:</span>
-                    <span class="value" id="apiUrl">http://localhost:5000/api/health</span>
+            <!-- User Validation Page -->
+            <div id="validationPage" class="page">
+                <div class="validation-card">
+                    <h2>User Validation</h2>
+                    <p class="subtitle">Validate username (only letters allowed)</p>
+                    
+                    <form id="validationForm" class="validation-form">
+                        <div class="form-group">
+                            <label for="userName">Username</label>
+                            <input 
+                                type="text" 
+                                id="userName" 
+                                name="userName" 
+                                placeholder="Enter username (A-Z, a-z only)"
+                                autocomplete="off"
+                                required
+                            />
+                            <span class="form-hint">Only letters (A-Z, a-z) are allowed</span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Validate User
+                        </button>
+                    </form>
+
+                    <div id="validationResult" class="validation-result hidden">
+                        <div class="result-icon" id="resultIcon"></div>
+                        <h3 id="resultTitle">Validation Result</h3>
+                        <p id="resultMessage">-</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="actions">
-                <button class="btn btn-primary" id="checkHealthBtn">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M13.65 2.35A8 8 0 1 0 2.35 13.65 8 8 0 1 0 13.65 2.35z" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M8 4v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Check Health
-                </button>
-            </div>
-
+            <!-- Console Logs (shared between pages) -->
             <div class="console-card">
                 <div class="console-header">
                     <h3>API Call Logs</h3>

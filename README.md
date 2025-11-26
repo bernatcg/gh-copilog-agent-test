@@ -59,12 +59,15 @@ A full-stack application with a .NET Core backend API and a minimal frontend for
 - ✅ Clean architecture structure (API, Application, Domain, Infrastructure)
 - ✅ Swagger/OpenAPI documentation
 - ✅ Health check endpoint (`/api/health`)
+- ✅ User validation endpoint (`/api/user/validate`)
 - ✅ CORS enabled for frontend communication
 - ✅ Returns server timestamp
 
 ### Frontend
 - ✅ Dark mode minimal design
+- ✅ Navigation between multiple pages
 - ✅ Real-time health check monitoring
+- ✅ User validation form with backend validation
 - ✅ API call logging (browser console + UI console)
 - ✅ Visual status indicators
 - ✅ Responsive layout
@@ -74,6 +77,12 @@ A full-stack application with a .NET Core backend API and a minimal frontend for
 ### Health Check
 - **GET** `/api/health`
 - Returns: `{ "status": "Healthy", "timestamp": "2025-11-26T13:00:00" }`
+
+### User Validation
+- **POST** `/api/user/validate`
+- Body: `{ "userName": "string" }`
+- Returns: `{ "isValid": true/false, "message": "string", "userName": "string" }`
+- Validates that username contains only letters (A-Z, a-z)
 
 ## Technologies
 

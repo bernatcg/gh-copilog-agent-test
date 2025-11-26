@@ -1,10 +1,24 @@
-// DOM Elements
+// DOM Elements - Navigation
+const navButtons = document.querySelectorAll('.nav-btn');
+const pages = document.querySelectorAll('.page');
+
+// DOM Elements - Health Page
 const statusIndicator = document.getElementById('statusIndicator');
 const statusText = document.getElementById('statusText');
 const statusMessage = document.getElementById('statusMessage');
 const serverStatus = document.getElementById('serverStatus');
 const serverTimestamp = document.getElementById('serverTimestamp');
 const checkHealthBtn = document.getElementById('checkHealthBtn');
+
+// DOM Elements - Validation Page
+const validationForm = document.getElementById('validationForm');
+const userNameInput = document.getElementById('userName');
+const validationResult = document.getElementById('validationResult');
+const resultIcon = document.getElementById('resultIcon');
+const resultTitle = document.getElementById('resultTitle');
+const resultMessage = document.getElementById('resultMessage');
+
+// DOM Elements - Shared
 const consoleOutput = document.getElementById('consoleOutput');
 const clearLogsBtn = document.getElementById('clearLogsBtn');
 
@@ -73,6 +87,33 @@ class UIManager {
 
 const uiManager = new UIManager();
 
+// Navigation Management
+class NavigationManager {
+    switchPage(pageName) {
+        // Update navigation buttons
+        navButtons.forEach(btn => {
+            if (btn.dataset.page === pageName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Update page visibility
+        pages.forEach(page => {
+            if (page.id === `${pageName}Page`) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+
+        logger.log('info', `📄 Switched to ${pageName} page`);
+    }
+}
+
+const navManager = new NavigationManager();
+
 // Health Check Function
 async function performHealthCheck() {
     uiManager.setButtonLoading(true);
@@ -91,9 +132,54 @@ async function performHealthCheck() {
     uiManager.setButtonLoading(false);
 }
 
-// Event Listeners
+// User Validation Function
+async function validateUser(event) {
+    event.preventDefault();
+    
+    const userName = userNameInput.value.trim();
+    
+    if (!userName) {
+        showValidationResult(false, 'Please enter a username');
+        return;
+    }
+
+    // Disable form during validation
+    validationForm.querySelector('button[type="submit"]').disabled = true;
+    
+    const result = await api.validateUser(userName);
+    
+    if (result.success && result.data) {
+        showValidationResult(result.data.isValid, result.data.message);
+    } else {
+        showValidationResult(false, result.error || 'Validation failed');
+    }
+    
+    // Re-enable form
+    validationForm.querySelector('button[type="submit"]').disabled = false;
+}
+
+function showValidationResult(isValid, message) {
+    validationResult.classList.remove('hidden', 'valid', 'invalid');
+    validationResult.classList.add(isValid ? 'valid' : 'invalid');
+    
+    resultTitle.textContent = isValid ? 'Valid Username' : 'Invalid Username';
+    resultMessage.textContent = message;
+}
+
+// Event Listeners - Navigation
+navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        navManager.switchPage(btn.dataset.page);
+    });
+});
+
+// Event Listeners - Health Page
 checkHealthBtn.addEventListener('click', performHealthCheck);
 
+// Event Listeners - Validation Page
+validationForm.addEventListener('submit', validateUser);
+
+// Event Listeners - Shared
 clearLogsBtn.addEventListener('click', () => {
     logger.clear();
 });

@@ -1,10 +1,12 @@
 # Meetup Frontend
 
-A minimal dark-themed frontend application for testing the Meetup backend API health.
+A minimal dark-themed frontend application for testing the Meetup backend API.
 
 ## Features
 
+- **Navigation**: Switch between Health Check and User Validation pages
 - **Health Check Dashboard**: Visual status indicator for backend connectivity
+- **User Validation**: Form-based username validation with real-time feedback
 - **Real-time Logging**: All API calls are logged to both the browser console and UI console
 - **Dark Mode Design**: Clean, minimal dark theme for better readability
 - **Responsive Layout**: Works on desktop and mobile devices
@@ -61,12 +63,22 @@ frontend/
 └── README.md
 ```
 
-## Features
+## Pages
 
-### Health Check
+### Health Check Page
 - Visual status indicator (green = healthy, red = unhealthy)
 - Displays server timestamp from the backend
 - Shows response time for API calls
+- Manual refresh button
+
+### User Validation Page
+- Input field for username entry
+- Submit button to validate username
+- Real-time validation feedback (valid/invalid)
+- Only letters (A-Z, a-z) are considered valid
+- Visual success/error indicators
+
+## Shared Features
 
 ### Console Logging
 - All API requests and responses are logged
@@ -84,6 +96,7 @@ frontend/
 The frontend is configured to connect to:
 - **Backend URL**: `http://localhost:5000`
 - **Health Endpoint**: `/api/health`
+- **User Validation Endpoint**: `/api/user/validate`
 
 To change the API URL, edit `js/api.js`:
 ```javascript

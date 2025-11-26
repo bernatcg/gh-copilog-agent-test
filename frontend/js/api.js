@@ -1,7 +1,8 @@
 // API Configuration
 const API_BASE_URL = 'http://localhost:5000';
 const API_ENDPOINTS = {
-    health: '/api/health'
+    health: '/api/health',
+    validateUser: '/api/user/validate'
 };
 
 // Logger utility
@@ -105,6 +106,14 @@ class ApiService {
     async checkHealth() {
         logger.log('info', '🏥 Checking backend health...');
         return await this.request(API_ENDPOINTS.health);
+    }
+
+    async validateUser(userName) {
+        logger.log('info', `👤 Validating username: "${userName}"`);
+        return await this.request(API_ENDPOINTS.validateUser, {
+            method: 'POST',
+            body: JSON.stringify({ userName })
+        });
     }
 }
 
