@@ -28,8 +28,11 @@ const clearLogsBtn = document.getElementById('clearLogsBtn');
 
 // Theme Management
 class ThemeManager {
+    static THEME_DARK = 'dark';
+    static THEME_LIGHT = 'light';
+
     constructor() {
-        this.theme = this.getStoredTheme() || 'dark';
+        this.theme = this.getStoredTheme() || ThemeManager.THEME_DARK;
         this.applyTheme(this.theme);
     }
 
@@ -42,19 +45,24 @@ class ThemeManager {
     }
 
     applyTheme(theme) {
-        if (theme === 'light') {
+        // Validate theme parameter
+        if (theme !== ThemeManager.THEME_LIGHT && theme !== ThemeManager.THEME_DARK) {
+            theme = ThemeManager.THEME_DARK;
+        }
+
+        if (theme === ThemeManager.THEME_LIGHT) {
             document.documentElement.setAttribute('data-theme', 'light');
-            themeIcon.textContent = '☀️';
+            if (themeIcon) themeIcon.textContent = '☀️';
         } else {
             document.documentElement.removeAttribute('data-theme');
-            themeIcon.textContent = '🌙';
+            if (themeIcon) themeIcon.textContent = '🌙';
         }
         this.theme = theme;
         this.storeTheme(theme);
     }
 
     toggle() {
-        const newTheme = this.theme === 'dark' ? 'light' : 'dark';
+        const newTheme = this.theme === ThemeManager.THEME_DARK ? ThemeManager.THEME_LIGHT : ThemeManager.THEME_DARK;
         this.applyTheme(newTheme);
         console.log(`🎨 Theme switched to: ${newTheme}`);
     }
@@ -207,9 +215,11 @@ function showValidationResult(isValid, message) {
 }
 
 // Event Listeners - Theme
-themeToggle.addEventListener('click', () => {
-    themeManager.toggle();
-});
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        themeManager.toggle();
+    });
+}
 
 // Event Listeners - Navigation
 navButtons.forEach(btn => {
