@@ -18,7 +18,7 @@ public class UserController : ControllerBase
             });
         }
 
-        // Validate that username contains only letters (A-Z, a-z)
+        // Validate that username contains only letters (including German and French characters)
         bool isValid = request.UserName.All(c => char.IsLetter(c));
 
         return Ok(new ValidateUserResponse
@@ -26,7 +26,7 @@ public class UserController : ControllerBase
             IsValid = isValid,
             Message = isValid 
                 ? $"Username '{request.UserName}' is valid" 
-                : $"Username '{request.UserName}' is invalid. Only letters (A-Z, a-z) are allowed",
+                : $"Username '{request.UserName}' is invalid. Only letters are allowed (including German and French characters)",
             UserName = request.UserName
         });
     }

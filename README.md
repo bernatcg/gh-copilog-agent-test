@@ -82,7 +82,7 @@ A full-stack application with a .NET Core backend API and a minimal frontend for
 - **POST** `/api/user/validate`
 - Body: `{ "userName": "string" }`
 - Returns: `{ "isValid": true/false, "message": "string", "userName": "string" }`
-- Validates that username contains only letters (A-Z, a-z)
+- Validates that username contains only letters (including German characters: ä, ö, ü, ß, Ä, Ö, Ü and French characters: à, â, é, è, ê, ë, ï, ô, ù, û, ü, ÿ, ç, etc.)
 
 ## Technologies
 
