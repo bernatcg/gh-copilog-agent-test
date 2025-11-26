@@ -1,0 +1,4 @@
+namespace Meetup.Infrastructure.Persistence;
+
+// Placeholder for infrastructure persistence
+// Add your database context and repositories here
